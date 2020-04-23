@@ -9,39 +9,66 @@ struct Lista
 
 void criaLista(struct Lista *, int);
 int busca(struct Lista, int);
-void inserir(struct Lista *, int);
-void excluir(struct Lista *, int);
-void mostrar(struct Lista);
+void insere(struct Lista *, int);
+void exclui(struct Lista *, int);
+void mostra(struct Lista);
+int listaEstaContidaEmLista(struct Lista *, struct Lista *);
 
 int main(void)
 {
-    struct Lista l;
-    int chave, q;
+    struct Lista l1, l2;
+    int operacoesL1, operacoesL2, x;
     char op;
 
-    scanf("%d", &q);
-    criaLista(&l, q + 1);
+    scanf("%d %d", &operacoesL1, &operacoesL2);
+    criaLista(&l1, operacoesL1);
+    criaLista(&l2, operacoesL2);
 
-    while (q--)
+    while (operacoesL1--)
     {
-        scanf("\n%c %d", &op, &chave);
+        scanf("\n%c %d", &op, &x);
         if (op == 'I')
         {
-            if (!busca(l, chave))
+            if (!busca(l1, x))
             {
-                inserir(&l, chave);
+                insere(&l1, x);
             }
         }
         else if (op == 'E')
         {
-            if (busca(l, chave))
+            if (busca(l1, x))
             {
-                excluir(&l, chave);
+                exclui(&l1, x);
             }
         }
     }
-    mostrar(l);
-    free(l.itens);
+
+    while (operacoesL2--)
+    {
+        scanf("\n%c %d", &op, &x);
+        if (op == 'I')
+        {
+            if (!busca(l2, x))
+            {
+                insere(&l2, x);
+            }
+        }
+        else if (op == 'E')
+        {
+            if (busca(l2, x))
+            {
+                exclui(&l2, x);
+            }
+        }
+    }
+
+    if (listaEstaContidaEmLista(&l1, &l2) != 0)
+        printf("SIM\n");
+    else
+        printf("NAO\n");
+
+    free(l1.itens);
+    free(l2.itens);
     return 0;
 }
 
@@ -52,7 +79,7 @@ void criaLista(struct Lista *l, int n)
     l->tamanho = n;
 }
 
-void inserir(struct Lista *lista, int chave)
+void insere(struct Lista *lista, int chave)
 {
     int i = 0, achei = 0, j;
 
@@ -78,7 +105,7 @@ void inserir(struct Lista *lista, int chave)
     lista->quantidade++;
 }
 
-void excluir(struct Lista *lista, int chave)
+void exclui(struct Lista *lista, int chave)
 {
     int i = 0, achei = 0, j;
 
@@ -125,11 +152,25 @@ int busca(struct Lista lista, int chave)
     return 0;
 }
 
-void mostrar(struct Lista lista)
+void mostra(struct Lista lista)
 {
     int i;
     for (i = 0; i < lista.quantidade; i++)
     {
         printf("%d\n", lista.itens[i]);
     }
+}
+
+int listaEstaContidaEmLista(struct Lista *l1, struct Lista *l2)
+{
+    int valorEncontrado = 1, estaContido = 1;
+    for (int i = 0; i < l1->quantidade; i++)
+    {
+        valorEncontrado = busca(*l2, l1->itens[i]);
+
+        if (valorEncontrado == 0)
+            estaContido = 0;
+    }
+
+    return estaContido;
 }
