@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ListaFloat
+struct lista_estatica
 {
   int *itens;
   int tamanho, quantidade;
 };
 
-void criaLista(struct ListaFloat *, int);
-void insere(struct ListaFloat *, int);
-void exclui(struct ListaFloat *, int);
-int buscaLinear(struct ListaFloat *, int);
-void mostra(struct ListaFloat *);
+void criaLista(struct lista_estatica *, int);
+void insere(struct lista_estatica *, int);
+void exclui(struct lista_estatica *, int);
+int buscaLinear(struct lista_estatica *, int);
+void mostra(struct lista_estatica *);
 
 int main()
 {
-  struct ListaFloat lista;
+  struct lista_estatica lista;
   int n, valor;
   char operacao;
 
@@ -57,14 +57,14 @@ int main()
   return 0;
 }
 
-void criaLista(struct ListaFloat *lista, int n)
+void criaLista(struct lista_estatica *lista, int n)
 {
   lista->itens = (int *)malloc(sizeof(int) * n);
   lista->quantidade = 0;
   lista->tamanho = n;
 }
 
-void insere(struct ListaFloat *lista, int valor)
+void insere(struct lista_estatica *lista, int valor)
 {
   int i = 0, posicaoEncontrada = 0;
 
@@ -88,7 +88,7 @@ void insere(struct ListaFloat *lista, int valor)
   lista->quantidade++;
 }
 
-void exclui(struct ListaFloat *lista, int valor)
+void exclui(struct lista_estatica *lista, int valor)
 {
   int i = 0, posicaoEncontrada = 0;
 
@@ -111,7 +111,7 @@ void exclui(struct ListaFloat *lista, int valor)
   }
 }
 
-int buscaLinear(struct ListaFloat *lista, int valor)
+int buscaLinear(struct lista_estatica *lista, int valor)
 {
   for (int i = 0; i < lista->quantidade; i++)
   {
@@ -125,7 +125,7 @@ int buscaLinear(struct ListaFloat *lista, int valor)
   return 0;
 }
 
-void mostra(struct ListaFloat *lista)
+void mostra(struct lista_estatica *lista)
 {
   for (int i = 0; i < lista->quantidade && i < lista->tamanho; i++)
   {
